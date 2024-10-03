@@ -1,0 +1,29 @@
+body {
+    background-image: url(images/oexlfzwy78ex.png);
+    
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+header nav{
+    border-color: black solid;
+    border-radius: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+header img{
+    width: 10%;
+}
+
+header input {
+    border-radius: 30px;
+    background-color: rgb(233, 144, 144);
+    text-align: center;
+    height: 50%;
+}

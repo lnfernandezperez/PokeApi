@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proyecto de JavaScript de Paginacion usando la API de PokeApi">
+    <link rel="icon" type="image/svg+xml" href="./images/pokemonIco.svg" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <title>Pokemons - Pagination</title>
+</head>
+<body>
+    <header>
+        <!-- <h2>PokeApi Page</h2> -->
+        <img src="./images/hero.png" alt="PokeApi Paginacion">
+        <div class="navigation">
+            <button onclick="prev()">«</button>
+            <div class="numbers"></div>
+            <button onclick="next()">»</button>
+        </div>
+        
+    </header>
+    <section>
+        <div class="container">
+            <div class="pokemons"></div>
+        </div>
+    </section>
+    <footer>
+    </footer>
+</body>
+</html>
