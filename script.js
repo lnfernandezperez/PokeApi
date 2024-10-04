@@ -1,90 +1,119 @@
 let container = document.querySelector(".pokemons");
-let navigation = document.querySelector(".navigation .numbers");
+let navigation = document.querySelector(".navigation");
+let search = document.querySelector(".buscador");
 
 let pokemons = [];
 const pokeUrl = "https://pokeapi.co/api/v2/";
 let prevLink = "";
 let nextLink = "";
-let count = 0;
-let perPage =25;
+let perPage = 25;
 let currentPage = 0;
 
 const changePg = (value) => {
-    //console.log("value: ", value);
-    let newUrl = `${pokeUrl}pokemon?limit=${value}`;
-    perPage = value;
-    getPokemons(newUrl);
-}
+  let newUrl = `${pokeUrl}pokemon?limit=${value}`;
+  perPage = value;
+  getPokemons(newUrl);
+};
+
 const prev = () => {
+  if (prevLink) {
     getPokemons(prevLink);
-}
+  }
+};
+
 const next = () => {
+  if (nextLink) {
     getPokemons(nextLink);
-}
+  }
+};
 
 const getPokemons = (url) => {
-    let params = new URLSearchParams(url.split('?')[1]);
-    let offset = params.get('offset');
-    currentPage = offset / perPage;
+  let params = new URLSearchParams(url.split("?")[1]);
+  let offset = params.get("offset") || 0;
+  currentPage = offset / perPage;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(responseJson => {
-            prevLink = responseJson.previous;
-            nextLink = responseJson.next;
-            count = responseJson.count;
-            addNumbers(count);
-            showPokemons(responseJson.results);
-        })
-}
+  fetch(url)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      prevLink = responseJson.previous;
+      nextLink = responseJson.next;
+      showPokemons(responseJson.results);
+      updateNavigationButtons();
+    });
+};
 
 const showPokemons = (array) => {
-    clearContainer();
-    array.map(item => {
-        fetch(item.url)
-            .then(response => response.json())
-            .then(data => {
-                //console.log("data: ", data)
-                loadCard(data);
-            })
+  clearContainer();
+  const promises = array.map((item) =>
+    fetch(item.url).then((response) => response.json())
+  );
+
+  Promise.all(promises)
+    .then((results) => {
+      results.forEach((data) => {
+        loadCard(data);
+      });
     })
-}
+    .catch((error) => {
+      console.error("Error al cargar los Pokémon: ", error);
+    });
+};
+
 const loadCard = (data) => {
-    const image = data.sprites.other.home.front_default;
-    let newImage = image ? image : '/images/default.png';
-    let card = document.createElement("div"); 
-    let content = `
-        <img src="${newImage}" alt="${data.name}">
+  const image = data.sprites.other.home.front_default;
+  const types = data.types;
+  const type = types.map((types) => {
+    return types.type.name;
+  });
+  let newImage = image ? image : "/images/default.png";
+  let card = document.createElement("div");
+  card.classList.add("pokemon");
+  let content = `
+        <img src="${newImage}" alt="${data.name}" class="imgPoke">
         <p>${data.name}</p>
-        <p class="order"> #${data.order}</p>
+        <p class="tipos"> ${type}</p>
     `;
-    card.innerHTML = content;
-    container.appendChild(card);
-}
+  card.innerHTML = content;
+  container.appendChild(card);
+};
 
-const clearContainer = () =>  container.innerHTML = "";
-const clearNavigation = () => navigation.innerHTML="";
+const clearContainer = () => (container.innerHTML = "");
 
-const addNumbers = (count) => {
-    clearNavigation();
-    const pages = count/perPage;
-    for (let index = 0; index < pages; index++) {
-        let number = document.createElement("span");
-        number.classList.add(`element-${index}`);
-        const numLink = `<button onclick="actionNumber(${index})">${index+1}</button>`
-        number.innerHTML = numLink;
-        navigation.appendChild(number);
-    }
-    addFocusClass();
-}
-const actionNumber = (index) => {
-    const newLink = `https://pokeapi.co/api/v2/pokemon?offset=${index*perPage}&limit=${perPage}`;
-    getPokemons(newLink);
-    
-}
-const addFocusClass = () => {
-    const span = document.querySelector(`.element-${currentPage}`);
-    span.classList.add("current");
-}
+const updateNavigationButtons = () => {
+  navigation.innerHTML = `
+        <button onclick="prev()" ${!prevLink ? "disabled" : ""}>Back</button>
+        <button onclick="next()" ${!nextLink ? "disabled" : ""}>Next</button>
+    `;
+};
 
+const searchPokemon = (url = `${pokeUrl}pokemon?limit=${perPage}&offset=0`) => {
+  let searchTerm = search.value.trim().toLowerCase();
+
+  if (searchTerm === "") {
+    getPokemons(`${pokeUrl}pokemon?offset=0&limit=25`);
+    return;
+  }
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      prevLink = responseJson.previous;
+      nextLink = responseJson.next;
+      let filteredPokemons = responseJson.results.filter((pokemon) =>
+        pokemon.name.includes(searchTerm)
+      );
+
+      if (filteredPokemons.length > 0) {
+        showPokemons(filteredPokemons);
+        updateNavigationButtons();
+      } else {
+        console.error("No se encontro el pokemon que buscaba");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+search.addEventListener("input", () => searchPokemon());
 getPokemons(`${pokeUrl}pokemon?offset=0&limit=25`);

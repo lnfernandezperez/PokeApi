@@ -1,29 +1,76 @@
-body {
-    background-image: url(images/oexlfzwy78ex.png);
-    
-}
-
-header{
+body{
+    font-family: "Baloo 2";
     display: flex;
-    justify-content: center;
-    width: 100%;
+    flex-direction: column;
+    margin: 0 20px;
+    background-image: url(images/background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-
-header nav{
-    border-color: black solid;
-    border-radius: 100px;
+header{
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 30px 70px;
+    background-color: white;
+    border-radius: 50px;
 }
-
 header img{
-    width: 10%;
+    width: 150px
+}
+header input{
+    width: 20%;
+    border: red solid 3px;
+    border-radius: 50px;
+    height: 30px;
+    text-align: center;
+}
+.titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}
+.pokemons{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    text-align: center;
+    gap: 30px;
+}
+.pokemon{
+    background-color: white;
+    border: black solid 1px;
+    border-radius: 30px;
+    font-size: 18px;
 }
 
-header input {
+.imgPoke{
+    width: 200px;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+}
+
+.button{
+    border: red solid 1px;
+}
+footer .navigation{
+    display: flex;
+
+}
+footer .navigation button {
+    border: red solid 1px;
     border-radius: 30px;
-    background-color: rgb(233, 144, 144);
-    text-align: center;
-    height: 50%;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: red;
+    color: white;
+
 }
