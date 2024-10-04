@@ -2,23 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Proyecto de JavaScript de Paginacion usando la API de PokeApi">
-    <link rel="icon" type="image/svg+xml" href="./images/pokemonIco.svg" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
     <title>Pokemons - Pagination</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
-        <!-- <h2>PokeApi Page</h2> -->
-        <img src="./images/hero.png" alt="PokeApi Paginacion">
-        <div class="navigation">
-            <button onclick="prev()">«</button>
-            <div class="numbers"></div>
-            <button onclick="next()">»</button>
+        <div class="titulo">
+            <img src="/images/pokeball-gif.gif" alt="PokeApi Paginacion">
+            <p>PokeApi</p>
         </div>
+        <input placeholder="Buscar Pokemons" class="buscador">
+        
         
     </header>
     <section>
@@ -27,6 +27,10 @@
         </div>
     </section>
     <footer>
+        <div class="navigation">
+            <button onclick="prev()" >«</button>
+            <button onclick="next()" >»</button>
+        </div>
     </footer>
 </body>
 </html>
