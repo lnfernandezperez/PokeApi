@@ -11,6 +11,7 @@ const getPokemons = (url) => {
         })
 }
 const showPokemons = (array) => {
+    clearContainer();
     array.map(item => {
         fetch(item.url)
         .then(response => response.json())
@@ -38,4 +39,5 @@ const loadCard = (data) => {
     card.innerHTML = content;
     container.appendChild(card);
 }
+const clearContainer = () => container.innerHTML = ""
 getPokemons(`${pokeUrl}?offset=0&limit=25`)
