@@ -22,7 +22,7 @@ const showPokemons = (array) => {
 }
 
 const loadCard = (data) => {
-    const image = data.sprites.other.home.front_default;
+    const image = data.sprites.other["official-artwork"].front_default;
     const name = data.name;
     const types = data.types;
     const type = types.map((types) => {
