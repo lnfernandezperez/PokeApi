@@ -1,12 +1,22 @@
 let container = document.querySelector(".pokemons")
 
 const pokeUrl = "https://pokeapi.co/api/v2/pokemon/";
+let = nextLink = "";
+let = prevLink = "";
 
+const prev = () => {
+    getPokemons(prevLink);
+}
+const next = () => {
+    getPokemons(nextLink);
+}
 const getPokemons = (url) => {
     fetch(url)
         .then(response => response.json())
         .then(responseJson => {
             console.log(responseJson);
+            nextLink =responseJson.next;
+            prevLink = responseJson.previous;
             showPokemons(responseJson.results);
         })
 }
