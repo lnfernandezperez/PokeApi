@@ -53,10 +53,10 @@ const loadCard = (data) => {
 const clearContainer = () => (container.innerHTML = "");
 getPokemons(`${pokeUrl}?offset=0&limit=25`);
 
-const inputElement = document.querySelector("buscador");
+const inputElement = document.getElementById("buscador");
 
 inputElement.addEventListener("input", () => {
-    handleInputChange(inputElement.ariaValueMax.toLowerCase());
+    handleInputChange(inputElement.value.toLowerCase());
 });
 
 function handleInputChange(searchValue) {
